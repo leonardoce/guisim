@@ -13,12 +13,14 @@ some guitar design parameter such as:
 - Python 3.9 or newer to calculate the indexes
 - [Gnuplot](http://www.gnuplot.info/) to plot the results
 
-## How to use it
+## Resonance analyser
+
+### How to use it
 
 The result data files can be created with:
 
 ```commandline
-python harmonics.py
+python3 main.py harmonics
 ```
 
 The results will look like:
@@ -98,13 +100,26 @@ Following the data section, there are a few comments lines about the global beha
 * `amplitude deciles` is what it tells, and is mainly a way to understand if the
   instrument is balanced or not.
 
-## Results discussion (a.k.a. Which guitar wins?)
+### Graphics
+
+A picture is worth a thousand words. Just use [Gnuplot](http://www.gnuplot.info/)
+like in the following example:
+
+```
+$ gnuplot
+gnuplot> plot "results/ten_string_yepes_guitar.csv" using 1:2:($3-1+0.1) with circles
+```
+
+### Results discussion (a.k.a. Which guitar wins?)
 
 This the wrong question, and you'll not be able to come up with an answer.
 
 It's way better to just look at raw data and make your idea, based on your
 instrument, your repertoire and your playing style, and basically what you
 like and what you don't.
+
+And by the way, this is theory, and its main purpose is to help luthiers
+devise new solution or to test an intuition.
 
 ## References
 
@@ -114,3 +129,5 @@ of the model. The following is an incomplete list:
 - http://classicalguitar101.org/tune-your-classical-guitar.html#.YmkMePNBxz8
 - https://pages.mtu.edu/~suits/NoteFreqCalcs.html
 - https://www.classicalguitardelcamp.com/viewtopic.php?t=36049
+- https://www.andreasaba.com/DIdattica/acustica/dispensa%20di%20acustica.pdf
+- https://en.wikipedia.org/wiki/Mersenne%27s_laws

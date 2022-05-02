@@ -1,9 +1,11 @@
 """
 Guitar harmonic resonance simulator.
 """
-# plot "ten_string_yepes_guitar.csv" using 1:2:($3-1+0.1) with circles
+
+# plot "results/ten_string_yepes_guitar.csv" using 1:2:($3-1+0.1) with circles
 
 from collections import namedtuple
+import configparser
 from statistics import quantiles
 
 
@@ -207,62 +209,20 @@ def _compare(harmonic_1, harmonic_2):
 
 
 def main():
-    # Reference for the notes frequency:
-    # https://pages.mtu.edu/~suits/NoteFreqCalcs.html
+    config = configparser.ConfigParser()
+    config.read('data/guitars.ini')
+    sections = config.sections()
 
-    # Body resonance is set to F#, which is common these days
-    f_sharp_body_resonance_hz = 92.9
-    g_body_resonance_hz = 98
-    g_sharp_body_resonance_hz = 103.83
+    for section in sections:
+        string_frequencies = [float(x.strip()) for x in config[section]['strings'].split(',')]
+        body_resonance = float(config[section]['body_resonance'].strip())
+        box_resonance = float(config[section]['box_resonance'].strip())
+        frets = int(config[section]['frets'].strip())
+        played_strings = int(config[section]['played_strings'].strip())
 
-    six_string_guitar = StringInstrument(
-        strings_frequencies=[329.63, 246.94, 196.00, 146.83, 110.00, 82.41],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    six_string_guitar.test("data/six_string.csv", 6)
-
-    seven_string_d_brasilian = StringInstrument(
-        strings_frequencies=[329.63, 246.94, 196.00, 146.83, 110.00, 82.41, 73.42],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    seven_string_d_brasilian.test("data/seven_string_d_brasilian.csv", 6)
-
-    russian_seven_strings = StringInstrument(
-        strings_frequencies=[293.66, 246.94, 196.00, 146.83, 123.47, 98.00, 73.42],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    russian_seven_strings.test("data/russian_seven_strings.csv", 6)
-
-    drop_d_guitar = StringInstrument(
-        strings_frequencies=[329.63, 246.94, 196.00, 146.83, 110.00, 73.42],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    drop_d_guitar.test("data/drop_d_guitar.csv", 6)
-
-    drop_c_guitar = StringInstrument(
-        strings_frequencies=[329.63, 246.94, 196.00, 146.83, 110.00, 65.41],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    drop_c_guitar.test("data/drop_c_guitar.csv", 6)
-
-    ten_string_yepes_guitar = StringInstrument(
-        strings_frequencies=[329.63, 246.94, 196.00, 146.83, 110.00, 82.41, 65.41, 116.54, 103.83, 92.50],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    ten_string_yepes_guitar.test("data/ten_string_yepes_guitar.csv", 6)
-
-    ten_string_baroque_guitar = StringInstrument(
-        strings_frequencies=[329.63, 246.94, 196.00, 146.83, 110.00, 82.41, 73.42, 65.41, 61.74, 55],
-        body_resonance=g_body_resonance_hz,
-        box_resonance=g_sharp_body_resonance_hz,
-        frets=12)
-    ten_string_baroque_guitar.test("data/ten_string_baroque_guitar.csv", 6)
-
-
-main()
+        guitar = StringInstrument(
+            string_frequencies,
+            body_resonance,
+            box_resonance,
+            frets)
+        guitar.test(f"results/{section}.csv", played_strings)

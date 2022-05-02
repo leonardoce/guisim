@@ -20,7 +20,7 @@ some guitar design parameter such as:
 The result data files can be created with:
 
 ```commandline
-python3 main.py harmonics
+python3 main.py resonance
 ```
 
 The results will look like:
@@ -120,6 +120,71 @@ like and what you don't.
 
 And by the way, this is theory, and its main purpose is to help luthiers
 devise new solution or to test an intuition.
+
+## String set tension calculator
+
+This tool is useful if you want to calculate the amount of force
+that is applied to a guitar when you string it.
+
+Important: tension is somewhat related but definitely 
+not the same as the amount of force you need to press down the
+strings. Several other factors enter the game when you need to
+calculate that, such as the elasticity of the string itself.
+
+To use this tool you need to modify the `data/string_sets.ini`
+and `strings.ini` files to include your preferred set and how
+you will tune the strings.
+
+This is an excerpt of `data/strings.ini`:
+
+```
+[J4301]
+tension=15.65
+frequency=329.63
+diameter=0.0275
+scale_length=25.5906
+```
+
+These are the unit of measures:
+
+* tension is measured in **lbs**
+* the diameter and the scale length in **inches**
+* the frequency is measured in **hertz**
+
+Every string set is described in `data/string_sets.ini`:
+
+```
+[daddario_ej45]
+strings=J4501,J4502,J4503,J4504,J4505,J4506
+frequencies=329.63,246.94,196.00,146.83,110.00,82.41
+```
+
+To start the string tension calculator you can use:
+
+```
+python3 main.py strings
+```
+
+The results are stored in `results/string_sets.txt` in the following
+format:
+
+```
+Set name: composite_yepes_daddario
+String 1 J4501 16.23 0.00%
+String 2 J4502 12.04 0.00%
+String 3 J4503 11.88 0.00%
+String 4 J4504 15.62 0.00%
+String 5 J4505 15.89 0.00%
+String 6 J4506 14.19 0.00%
+String 7 J4606 9.58 -37.00%
+String 8 J4305 15.51 12.24%
+String 9 J4605 15.11 -10.90%
+String 10 J4306 16.43 25.99%
+Total tension: 142.4835898521798
+```
+
+The total tension is calculated with the tension of every string, and the
+stretch factor over the intended tension.
 
 ## References
 

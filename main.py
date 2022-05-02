@@ -3,20 +3,21 @@ Guitar simulation engine
 """
 
 import argparse
-from guisim import harmonics, strings
+from guisim import resonance, strings
 
 
 def __simulator():
     parser = argparse.ArgumentParser(description="Guitar simulation package")
-    commands = parser.add_subparsers(dest="commands")
+    commands = parser.add_subparsers(dest="subcommand")
+    commands.required = True
 
-    harmonics_cmd = commands.add_parser("harmonics", description="Harmonic resonance calculator")
+    harmonics_cmd = commands.add_parser("resonance", description="Harmonic resonance calculator")
     strings_cmd = commands.add_parser("strings", description="String tension calculator")
 
     args = parser.parse_args()
-    if args.commands == 'harmonics':
-        harmonics.main()
-    elif args.commands == 'strings':
+    if args.subcommand == 'resonance':
+        resonance.main()
+    elif args.subcommand == 'strings':
         strings.main()
 
 

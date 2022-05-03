@@ -184,9 +184,10 @@ class StringInstrument(object):
                     total_amplitude += amplitude
                     amplitude_collector.append(amplitude)
                     contributions = sorted(contributions, key=lambda x: -x.amplitude)
+                    note = notes.find_note(base_hz)
                     if len(contributions) > 0:
                         contributions_counts += 1
-                    print(f"{bar} {idx} {amplitude:.2f} # base:{base_hz} {contributions}", file=f)
+                    print(f"{bar} {idx} {amplitude:.2f} # {note} base:{base_hz} {contributions}", file=f)
 
             base_amplitude = strings_count * (self.frets+1)
             resonance_effect = total_amplitude - base_amplitude
@@ -206,7 +207,7 @@ def _compare(harmonic_1, harmonic_2):
     :return: True when the two harmonic relation can oscillate
        by resonance
     """
-    return notes.compare(harmonic_1.hz-harmonic_2.hz)
+    return notes.compare(harmonic_1.hz, harmonic_2.hz)
 
 
 def main():

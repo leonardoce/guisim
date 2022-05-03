@@ -196,3 +196,4 @@ of the model. The following is an incomplete list:
 - https://www.classicalguitardelcamp.com/viewtopic.php?t=36049
 - https://www.andreasaba.com/DIdattica/acustica/dispensa%20di%20acustica.pdf
 - https://en.wikipedia.org/wiki/Mersenne%27s_laws
+- https://www.yamaha.com/en/musical_instrument_guide/acoustic_guitar/mechanism/mechanism004.html

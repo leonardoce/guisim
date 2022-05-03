@@ -7,6 +7,7 @@ Guitar harmonic resonance simulator.
 from collections import namedtuple
 import configparser
 from statistics import quantiles
+from . import notes
 
 
 HarmonicData = namedtuple("HarmonicData", "order hz amplitude")
@@ -205,7 +206,7 @@ def _compare(harmonic_1, harmonic_2):
     :return: True when the two harmonic relation can oscillate
        by resonance
     """
-    return abs(harmonic_1.hz-harmonic_2.hz) < 2
+    return notes.compare(harmonic_1.hz-harmonic_2.hz)
 
 
 def main():

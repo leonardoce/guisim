@@ -18,6 +18,7 @@ https://en.wikipedia.org/wiki/Mersenne%27s_laws
 """
 
 import configparser
+from . import notes
 
 string_catalog = dict()
 """
@@ -86,13 +87,15 @@ class StringSet(object):
         total_tension = 0
         for idx, name in enumerate(self.string_names):
             current_string = string_catalog[name]
+            note_name = notes.find_note(self.frequencies[idx])
             tension = current_string.tension_at_frequency(self.frequencies[idx])
             total_tension += tension
 
             nominal_tension = current_string.tension
             stretch_factor = ((tension - nominal_tension)*100)/nominal_tension
 
-            print(f"String {idx+1} {name} {tension:.2f} {stretch_factor:.2f}%", file=file)
+            print(f"String {idx+1} {name} {tension:.2f} {stretch_factor:.2f}% [{note_name}]", file=file)
+
         print(f"Total tension: {total_tension}", file=file)
         print("---", file=file)
 

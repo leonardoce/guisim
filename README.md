@@ -6,7 +6,7 @@ some guitar design parameter such as:
 - number of strings
 - tuning used
 - body air resonance
-- boxen body resonance
+- wooden body resonance
 
 ## Requirements
 

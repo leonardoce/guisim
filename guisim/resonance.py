@@ -187,7 +187,7 @@ class StringInstrument(object):
                     note = notes.find_note(base_hz)
                     if len(contributions) > 0:
                         contributions_counts += 1
-                    print(f"{bar} {idx} {amplitude:.2f} # {note} base:{base_hz} {contributions}", file=f)
+                    print(f"{bar} {idx} {amplitude:.3f} # {note} base:{base_hz} {contributions}", file=f)
 
             base_amplitude = strings_count * (self.frets+1)
             resonance_effect = total_amplitude - base_amplitude
@@ -198,7 +198,8 @@ class StringInstrument(object):
             print(f"# silent notes: {base_amplitude - contributions_counts}", file=f)
 
             for idx, q in enumerate(quantiles(amplitude_collector, n=10, method='inclusive')):
-                print(f"# amplitude deciles: {idx} {q:.2f}", file=f)
+                print(f"# amplitude deciles: {idx+1} {q:.2f}", file=f)
+            print(f"# max amplitude: {max(amplitude_collector):.2f}", file=f)
 
 
 def _compare(harmonic_1, harmonic_2):

@@ -48,7 +48,7 @@ class GuitarString(object):
         self.mass_per_unit_length = self.tension / pow(
             2 * self.scale_length * self.frequency, 2)
 
-    def tension_at_frequency(self, hz):
+    def tension_at_frequency(self, hz, scale_length=None):
         """
         Estimate the tension of the string maintaining the same
         mass per unit length and the same length but changing
@@ -60,7 +60,10 @@ class GuitarString(object):
         # (2L * f0)^2 = F/u
         # u * (2L * f0)^2 = F
 
-        return self.mass_per_unit_length * pow(2 * self.scale_length * hz, 2)
+        if scale_length is None:
+            scale_length = self.scale_length
+
+        return self.mass_per_unit_length * pow(2 * scale_length * hz, 2)
 
 
 class StringSet(object):
@@ -78,7 +81,7 @@ class StringSet(object):
         self.string_names = string_names
         self.frequencies = frequencies
 
-    def extract_report(self, file):
+    def extract_report(self, file, scale_length=None):
         """
         Create a report of the set of strings inside the given
         stream object
@@ -88,7 +91,7 @@ class StringSet(object):
         for idx, name in enumerate(self.string_names):
             current_string = string_catalog[name]
             note_name = notes.find_note(self.frequencies[idx])
-            tension = current_string.tension_at_frequency(self.frequencies[idx])
+            tension = current_string.tension_at_frequency(self.frequencies[idx], scale_length)
             total_tension += tension
 
             nominal_tension = current_string.tension
@@ -120,4 +123,7 @@ def main():
             string_names = sets.get(section, 'strings').split(',')
             frequencies = [float(x) for x in sets.get(section, 'frequencies').split(',')]
             string_set = StringSet(section, string_names, frequencies)
-            string_set.extract_report(f)
+            scale_length = sets.get(section, 'scale_length', fallback=None)
+            if scale_length is not None:
+                scale_length = float(scale_length)
+            string_set.extract_report(f, scale_length=scale_length)

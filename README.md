@@ -157,7 +157,16 @@ Every string set is described in `data/string_sets.ini`:
 [daddario_ej45]
 strings=J4501,J4502,J4503,J4504,J4505,J4506
 frequencies=329.63,246.94,196.00,146.83,110.00,82.41
+
+[daddario_ej46_scale_63_5]
+strings=J4601,J4602,J4603,J4604,J4605,J4606
+frequencies=329.63,246.94,196.00,146.83,110.00,82.41
+scale_length=25
 ```
+
+By defining a custom string set, you can calculate the tension resulting
+from the strings under the conditions specified. You can change the
+fundamental frequency of the string and the string length.
 
 To start the string tension calculator you can use:
 
@@ -185,6 +194,16 @@ Total tension: 142.4835898521798
 
 The total tension is calculated with the tension of every string, and the
 stretch factor over the intended tension.
+
+This is useful to check how your strings will react with a different tuning
+and/or a different scale length, and will give an indication of the
+difference between the work tension the string was designed for and the
+one you'll adopt.
+
+We don't take into account the actual **anharmonicity Constant** of the
+materials used to build the string but just the variation on the string
+tension, and we don't take into account the actual breaking tension of
+the string.
 
 ## References
 

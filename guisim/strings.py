@@ -26,6 +26,20 @@ This contains a mapping between each
 string code and the GuitarString object
 """
 
+KG_TO_LBS = 2.20462
+"""
+Constant used to convert kgs to lbs
+"""
+
+MM_TO_INCH = 0.0393701
+"""
+Constant used to convert from millimeters to inches
+"""
+
+CM_TO_INCH = 0.393701
+"""
+Constant used to convert centimeters to inches
+"""
 
 class GuitarString(object):
     """
@@ -108,11 +122,26 @@ def main():
     parser = configparser.ConfigParser()
     parser.read('data/strings.ini')
     for section in parser.sections():
-        s = GuitarString(
-            float(parser.get(section, 'tension')),
-            float(parser.get(section, 'frequency')),
-            float(parser.get(section, 'diameter')),
-            float(parser.get(section, 'scale_length')))
+        tension = float(parser.get(section, 'tension'))
+        if parser.get(section, 'tension_unit', fallback='lbs') == 'kg':
+            tension = tension * KG_TO_LBS
+
+        frequency = float(parser.get(section, 'frequency'))
+
+        diameter = float(parser.get(section, 'diameter'))
+        if parser.get(section, 'diameter_unit', fallback='inch') == 'mm':
+            diameter = diameter * MM_TO_INCH
+        elif parser.get(section, 'diameter_unit', fallback='inch') == 'cm':
+            diameter = diameter * CM_TO_INCH
+
+        scale_length = float(parser.get(section, 'scale_length', fallback='inch'))
+        if parser.get(section, 'scale_length_unit', fallback='inch') == 'mm':
+            scale_length = scale_length * MM_TO_INCH
+        elif parser.get(section, 'scale_length_unit', fallback='inch') == 'cm':
+            scale_length = scale_length * CM_TO_INCH
+
+
+        s = GuitarString(tension, frequency, diameter, scale_length)
         string_catalog[section] = s
 
     # Calculate the tension of each set

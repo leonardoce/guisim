@@ -151,6 +151,10 @@ These are the unit of measures:
 * the diameter and the scale length in **inches**
 * the frequency is measured in **hertz**
 
+You can specify the properties of strings using different unit
+of measure, if you like. Just have a look at the examples in the
+data file.
+
 Every string set is described in `data/string_sets.ini`:
 
 ```

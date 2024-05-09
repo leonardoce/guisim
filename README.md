@@ -102,7 +102,7 @@ Following the data section, there are a few comments lines about the global beha
 
 ### Graphics
 
-A picture is worth a thousand words. Just use [Gnuplot](http://www.gnuplot.info/)
+A picture is worth a thousands words. Just use [Gnuplot](http://www.gnuplot.info/)
 like in the following example:
 
 ```

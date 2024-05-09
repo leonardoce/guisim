@@ -39,7 +39,7 @@ def find_note(hz):
     next_note = None
 
     for note in notes_db:
-        if note.hz < hz:
+        if note.hz <= hz:
             prev_note = note
         if hz < note.hz:
             next_note = note

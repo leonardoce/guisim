@@ -68,7 +68,7 @@ def __generate_db():
         note = Note(hz=current_hz, name=note_name)
         notes_db.append(note)
 
-        current_hz = current_hz * pow(2, 1/12)
+        current_hz = round(current_hz * pow(2, 1/12), 2)
         current_note_name_idx += 1
         if current_note_name_idx >= len(note_names):
             current_note_name_idx = 0

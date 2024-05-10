@@ -74,7 +74,7 @@ class VibratingObject(object):
             self.harmonics.append(
                 HarmonicData(
                     order=x,
-                    hz=self.base_frequency*x,
+                    hz=round(self.base_frequency*x, 2),
                     amplitude=1/(x*x)))
 
     def sound_amplitude(self, emitting_object):
@@ -82,8 +82,7 @@ class VibratingObject(object):
         Calculates the amplitude of the acoustic resonance for a certain
         frequency as emitted by another object.
 
-        :param emitting_object: is the object which is the sound, and is
-          used to calculate the harmonics
+        :param emitting_object: the object that is emitting the sound
         """
 
         amplitude = 0
@@ -143,8 +142,8 @@ class StringInstrument(object):
         # of the body of the instrument
         for string in self.resonant_objects:
             if string == string_used:
-                # The string we use to play will not resonate
-                # by itself
+                # The string we use to play will not resonate,
+                # we've our fingers on it!
                 continue
 
             amplitude, string_contributions = string.sound_amplitude(
@@ -179,7 +178,7 @@ class StringInstrument(object):
                 if idx >= strings_count:
                     continue
                 for bar in range(self.frets+1):
-                    base_hz = string.base_frequency * pow(2.0, bar/12)
+                    base_hz = round(string.base_frequency * pow(2.0, bar/12), 2)
                     amplitude, contributions = self.amplitude(base_hz, string)
                     total_amplitude += amplitude
                     amplitude_collector.append(amplitude)
